@@ -42,11 +42,6 @@ module.exports = function (options) {
     hooker.hook(process.stdout,'write', function() {
         var data = {};
 
-        // hack le hack
-        if (arguments[0].indexOf('webpack: Compiled successfully.')){
-            data = {reload:true};
-            wss.broadcast(data);
-        }
 
         if (arguments[0].indexOf('\x1b[2K') > -1) {
             data = {removeLine:true};
@@ -65,6 +60,7 @@ module.exports = function (options) {
 
             data = {
                 line: html,
+                doTheReload:(html.indexOf('webpack: Compiled successfully.') > -1),
                 orig: arguments[0],
                 isError: isError(arguments[0],options)
             };
