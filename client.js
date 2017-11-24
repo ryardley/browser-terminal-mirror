@@ -58,6 +58,7 @@
       var pre = document.createElement('pre');
       pre.style.backgroundColor = 'black';
       pre.style.color = '#CCC';
+      pre.style.margin = '0';
       pre.style.position = 'absolute';
       pre.style.top = pre.style.left = pre.style.bottom = pre.style.right = '0px';
       pre.style.overflowY = 'scroll';
