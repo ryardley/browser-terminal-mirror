@@ -44,7 +44,8 @@ module.exports = function (options) {
 
         // hack le hack
         if (arguments[0].indexOf('webpack: Compiled successfully.')){
-            window.location.reload(1);
+            data = {reload:true};
+            wss.broadcast(data);
         }
 
         if (arguments[0].indexOf('\x1b[2K') > -1) {

@@ -23,6 +23,7 @@
     var connection = new WebSocket(protocol + '://' + location.hostname + ':37901');
     connection.onmessage = function(e){
       var data = JSON.parse(e.data);
+
       var pre = document.querySelector('#browser-terminal-mirror>pre');
       if (data.line) {
         $('#browser-terminal-mirror>pre').append(data.line);
@@ -37,6 +38,9 @@
 
       while (pre.children.length > 300) {
         pre.removeChild(pre.children[0]);
+      }
+      if(data.reload){
+        window.location.reload(1);
       }
       //need to delete the lines over time else the browser will get bogged down
     };
