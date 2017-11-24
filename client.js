@@ -26,7 +26,9 @@
 
       var pre = document.querySelector('#browser-terminal-mirror>pre');
       if (data.line) {
-        $('#browser-terminal-mirror>pre').append(data.line);
+        const child = document.createElement('span');
+        child.innerHTML = data.line;
+        pre.appendChild(child);
         pre.scrollTop = pre.scrollHeight;
       }
       if (data.removeLine) {
@@ -49,7 +51,7 @@
     elem.id = 'browser-terminal-mirror';
     elem.style.display = 'none';
     elem.style.position = 'fixed';
-    elem.style.top = elem.style.left = elem.style.bottom = elem.style.right = '10px';
+    elem.style.top = elem.style.left = elem.style.bottom = elem.style.right = '0';
     elem.style.paddingTop = '0px';
     elem.style.zIndex = 9999999;
 
@@ -62,46 +64,46 @@
     pre.style.marginBottom = '0px';
     elem.appendChild(pre);
 
-    var toolbar = document.createElement('div');
-    toolbar.style.position = 'absolute';
-    toolbar.style.top = '5px';
-    toolbar.style.right = '25px';
-    toolbar.style.zIndex = 999999;
-    elem.appendChild(toolbar);
+    // var toolbar = document.createElement('div');
+    // toolbar.style.position = 'absolute';
+    // toolbar.style.top = '5px';
+    // toolbar.style.right = '25px';
+    // toolbar.style.zIndex = 999999;
+    // elem.appendChild(toolbar);
 
-    var link = document.createElement('a');
-    link.style.color = 'grey';
-    link.href = 'http://github.com/cgross/browser-terminal-mirror';
-    link.innerHTML = 'browser-terminal-mirror';
-    toolbar.appendChild(link);
+    // var link = document.createElement('a');
+    // link.style.color = 'grey';
+    // link.href = 'http://github.com/cgross/browser-terminal-mirror';
+    // link.innerHTML = 'browser-terminal-mirror';
+    // toolbar.appendChild(link);
 
-    var sep = document.createElement('span');
-    sep.innerHTML = ' | ';
-    toolbar.appendChild(sep);
+    // var sep = document.createElement('span');
+    // sep.innerHTML = ' | ';
+    // toolbar.appendChild(sep);
 
-    link = document.createElement('a');
-    link.style.color = 'grey';
-    link.href = '#';
-    link.innerHTML = 'clear';
-    link.addEventListener('click',function(e){
-      e.preventDefault();
-      pre.innerHTML = '';
-    });
-    toolbar.appendChild(link);
+    // link = document.createElement('a');
+    // link.style.color = 'grey';
+    // link.href = '#';
+    // link.innerHTML = 'clear';
+    // link.addEventListener('click',function(e){
+    //   e.preventDefault();
+    //   pre.innerHTML = '';
+    // });
+    // toolbar.appendChild(link);
 
-    sep = document.createElement('span');
-    sep.innerHTML = ' | ';
-    toolbar.appendChild(sep);
+    // sep = document.createElement('span');
+    // sep.innerHTML = ' | ';
+    // toolbar.appendChild(sep);
 
-    link = document.createElement('a');
-    link.style.color = 'grey';
-    link.href = '#';
-    link.innerHTML = 'close';
-    link.addEventListener('click',function(e){
-      e.preventDefault();
-      elem.style.display = 'none';
-    });
-    toolbar.appendChild(link);
+    // link = document.createElement('a');
+    // link.style.color = 'grey';
+    // link.href = '#';
+    // link.innerHTML = 'close';
+    // link.addEventListener('click',function(e){
+    //   e.preventDefault();
+    //   elem.style.display = 'none';
+    // });
+    // toolbar.appendChild(link);
 
     document.body.appendChild(elem);
 
