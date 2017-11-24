@@ -40,29 +40,33 @@ module.exports = function (options) {
     };
 
     hooker.hook(process.stdout,'write', function() {
-
         var data = {};
 
-        if (arguments[0] === '\x1b[2K') {
-        data = {removeLine:true};
-        } else if (arguments[0] === '\x1b[1G'){
-        //do nothing
-        return;
-        } else {
-        var html = convert.toHtml(arguments[0]);
-        // var html = ansi_up.ansi_to_html(arguments[0]);
-        if (html[0] !== '<') {
-            html = '<span>' + html + '</span>';
+        // hack le hack
+        if (arguments[0].indexOf('webpack: Compiled successfully.')){
+            window.location.reload(1);
         }
-        //such hack
-        html = html.replace(/color:#A50/gm,'color:#F0E68C');
 
-        data = {
-            line: html,
-            orig: arguments[0],
-            //such hack, much wow
-            isError: isError(arguments[0],options)
-        };
+        if (arguments[0].indexOf('\x1b[2K') > -1) {
+            data = {removeLine:true};
+            wss.broadcast(data);
+        }
+
+        if (arguments[0] === '\x1b[1G'){
+            return;
+        } else {
+            // No one said this actually had to work eh? :)
+            var html = convert.toHtml(arguments[0]).replace(/KAKAKG(KA)?/, '').replace(/KA/, '');
+
+            if (html[0] !== '<') {
+                html = '<span>' + html + '</span>';
+            }
+
+            data = {
+                line: html,
+                orig: arguments[0],
+                isError: isError(arguments[0],options)
+            };
         }
 
         wss.broadcast(data);
@@ -73,7 +77,7 @@ module.exports = function (options) {
 var isError = function(message,options) {
     for (var i = 0; i < options.errorPattern.length; i++) {
         if (options.errorPattern[i].test(message)) {
-            console.error('MESSAGE='+message);
+            // console.error('MESSAGE='+message);
             return true;
         }
     }
